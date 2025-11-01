@@ -1,0 +1,11 @@
+{
+  "name": "OrangeHRM-E2E-Playwright",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.2"
+  }
+}
