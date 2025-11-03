@@ -41,4 +41,22 @@ export class PIMPage {
         await this.autoDrop.getByText(hintStartsWith, { exact: false }).first().click();
         await this.searchBtn.click();
     }
+
+    async openAdd() {
+        await this.page.getByRole('button', { name: /^Add$/ }).click();
+        await this.page.waitForURL(/pim\/addEmployee/i);
+    }
+
+    async save() {
+        await this.page.getByRole('button', { name: /^Save$/ }).click();
+    }
+
+    errorFor(field) {
+        const map = {
+            firstName: this.page.getByPlaceholder('First Name').locator('xpath=../../..').locator('.oxd-input-group__message'),
+            lastName:  this.page.getByPlaceholder('Last Name').locator('xpath=../../..').locator('.oxd-input-group__message'),
+        };
+        return map[field];
+    }
+
 }

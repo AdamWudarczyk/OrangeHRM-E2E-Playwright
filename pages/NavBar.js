@@ -17,4 +17,9 @@ export class NavBar {
         await this.page.locator('.oxd-userdropdown-tab').click();
         await this.page.getByRole('menuitem', { name: 'Logout' }).click();
     }
+
+    menuItem(name) {
+        return this.page.getByRole('menuitem', { name: new RegExp(`^${name}$`, 'i') });
+    }
+
 }
