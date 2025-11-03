@@ -17,10 +17,10 @@ The project covers login, admin management, and employee CRUD workflows with dat
 │  └─ login.spec.js\
 ├─ fixtures/\
 │  ├─ avatar.jpg\
-│  └─ credentials.json      \    # demo: { "username": "Admin", "password": "admin123" }
-├─ pages/\
+│  └─ credentials.json      \    # demo: { "username": "Admin", "password": "admin123" }\
+├─ pages\
 │  └─ LoginPage.js\
-├─ test-results/\
+├─ test-results\
 ├─ playwright.config.js\
 ├─ package.json\
 └─ README.md\
