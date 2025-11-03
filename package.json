@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {},
+  "type": "module",
   "private": true,
   "devDependencies": {
     "@playwright/test": "^1.56.1",
