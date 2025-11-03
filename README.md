@@ -12,10 +12,6 @@ Covers smoke, functional (positive & negative), and end-to-end test scenarios fo
 
 ## Project Structure
 
-├─ e2e/\
-│  └─ login.spec.js\
-├─ pim.lifecycle.spec.js
-└─ leave.apply.spec.js
 ├─ fixtures\
 │  ├─ avatar.jpg\
 │  └─ credentials.json      \    # demo: { "username": "Admin", "password": "admin123" }\
@@ -25,7 +21,18 @@ Covers smoke, functional (positive & negative), and end-to-end test scenarios fo
 │  └─ LeavePage.js\
 │  └─ NavBar.js\
 │  └─ PIMPage.js\
-├─ test-results\
+├─ tests/
+│  ├─ admin.filter-role.spec.js\
+│  ├─ admin.search-nonexistent-user.spec.js\
+│  ├─ leave.apply-leave.spec.js\
+│  ├─ login.smoke.spec.js\
+│  ├─ nav.smoke.spec.js\
+│  ├─ pim.add-employee.negative.spec.js\
+│  ├─ pim.lifecycle.spec.js\
+│  └─ reset-password.spec.js\
+├─ pim.lifecycle.spec.js\
+└─ leave.apply-leave.spec.js\
+│\
 ├─ playwright.config.js\
 ├─ package.json\
 └─ README.md\
@@ -50,19 +57,21 @@ Run with browser visible\
 ```npx playwright test --headed```
 
 Run a specific spec file\
-```npx playwright test e2e/login.spec.js```
+```npx playwright test e2e/login.smoke.spec.js```
 
 ## Test Coverage
 
 ### Smoke Tests
-- Login page loads and authenticates with valid credentials
-- Invalid login shows error toast
+- Verify login page loads successfully
+- Verify navigation bar links (PIM, Leave, Admin)
 ### Positive End-to-End Tests
-- Employee lifecycle (PIM): add employee → verify in list → verify in Admin → re-login as new user
-- Leave request: apply for leave → verify request in “My Leave”
+- Add and manage employee lifecycle (create → verify → update → delete)
+- Apply leave request and validate in "My Leave"
+- Password reset flow for target user
 ### Negative End-to-End Tests
-- Login with invalid credentials
-- Missing required fields in Add Employee form
+- Add employee with missing required fields (validation messages)
+- Search for non-existent user in Admin panel
+- Invalid login attempt shows proper error message
 
 ---
 ### License
