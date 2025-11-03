@@ -1,4 +1,7 @@
+import { expect } from '@playwright/test';
+
 export class LoginPage {
+
     constructor(page) {
         this.page = page;
         this.username = page.getByPlaceholder('Username');
@@ -8,9 +11,9 @@ export class LoginPage {
         this.dashboardHeader = page.getByRole('heading', { name: /dashboard/i });
     }
 
-    async open(baseUrl) {
-        await this.page.goto(`${baseUrl}/web/index.php/auth/login`, { waitUntil: 'domcontentloaded' });
-        await this.username.waitFor();
+    async goto() {
+        await this.page.goto('/web/index.php/auth/login', { waitUntil: 'domcontentloaded' });
+        await expect(this.username).toBeVisible();
     }
 
     async login(user, pass) {
@@ -19,6 +22,9 @@ export class LoginPage {
         await Promise.all([
             this.page.waitForURL(/dashboard/),
             this.loginBtn.click()
-        ]);
+        ]); }
+    async assertInvalidCreds() {
+        await expect(this.error).toBeVisible();
+        await expect(this.error).toContainText(/invalid credentials/i);
+        }
     }
-}
