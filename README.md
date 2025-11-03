@@ -1,25 +1,30 @@
 # OrangeHRM E2E Testing – Playwright
-
-End-to-end automated testing suite for the OrangeHRM demo web app, built with Playwright (JavaScript, ESM) using the Page Object Model (POM) pattern.
-The project covers login, admin management, and employee CRUD workflows with data-driven test scenarios (JSON fixtures).
-
+Comprehensive automated testing framework for the OrangeHRM demo application, developed with Playwright (JavaScript, ESM) using the Page Object Model structure.
+Covers smoke, functional (positive & negative), and end-to-end test scenarios for login, admin, and employee management modules.
 
 ## Tech Stack
 
-- Playwright (@playwright/test)
-- JavaScript (ESM) – "type": "module"
-- Page Object Model for test structure
-- JSON fixtures for data-driven testing
+- **Playwright** (@playwright/test)
+- **JavaScript** (ESM) – "type": "module"
+- **Page Object Model** for test structure
+- **JSON** fixtures for data-driven testing
+- **HTML reporting** via Playwright Test Runner
 
 ## Project Structure
 
 ├─ e2e/\
 │  └─ login.spec.js\
-├─ fixtures/\
+├─ pim.lifecycle.spec.js
+└─ leave.apply.spec.js
+├─ fixtures\
 │  ├─ avatar.jpg\
 │  └─ credentials.json      \    # demo: { "username": "Admin", "password": "admin123" }\
 ├─ pages\
+│  └─ AdminUsersPage.js\
 │  └─ LoginPage.js\
+│  └─ LeavePage.js\
+│  └─ NavBar.js\
+│  └─ PIMPage.js\
 ├─ test-results\
 ├─ playwright.config.js\
 ├─ package.json\
@@ -50,11 +55,14 @@ Run a specific spec file\
 ## Test Coverage
 
 ### Smoke Tests
-TBD
+- Login page loads and authenticates with valid credentials
+- Invalid login shows error toast
 ### Positive End-to-End Tests
-TBD
+- Employee lifecycle (PIM): add employee → verify in list → verify in Admin → re-login as new user
+- Leave request: apply for leave → verify request in “My Leave”
 ### Negative End-to-End Tests
-TBD
+- Login with invalid credentials
+- Missing required fields in Add Employee form
 
 ---
 ### License
