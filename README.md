@@ -21,7 +21,7 @@ Covers smoke, functional (positive & negative), and end-to-end test scenarios fo
 │  └─ LeavePage.js\
 │  └─ NavBar.js\
 │  └─ PIMPage.js\
-├─ tests/
+├─ tests/\
 │  ├─ admin.filter-role.spec.js\
 │  ├─ admin.search-nonexistent-user.spec.js\
 │  ├─ leave.apply-leave.spec.js\
