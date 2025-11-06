@@ -2,12 +2,17 @@ export class AdminUsersPage {
     /** @param {import('@playwright/test').Page} page */
     constructor(page) {
         this.page = page;
+        this.heading = page.getByRole('heading', { name: /system users/i });
         this.usernameFilter = page.getByPlaceholder('Type for hints...').first();
         this.searchBtn = page.getByRole('button', { name: 'Search' });
         this.rows = page.locator('div.oxd-table-body > div.oxd-table-card');
         this.tableRows = page.locator('div.oxd-table-body > div.oxd-table-card');
-        this.userRoleSelect = page.getByText('User Role').locator('xpath=..').locator('i');
+        this.userRoleCombo = page.getByRole('combobox', { name: /user role/i }).first();
+        this.userRoleComboFallback = page
+            .locator('label', { hasText: 'User Role' })
+            .locator("xpath=../following-sibling::div//div[contains(@class,'oxd-select-text')]");
     }
+
 
     async open() {
         await this.page.waitForURL(/admin\/viewSystemUsers/i, { timeout: 15000 });
@@ -17,10 +22,9 @@ export class AdminUsersPage {
         return this.tableRows;
     }
 
-    async search(username) {
+    async search(username = '') {
         await this.usernameFilter.fill(username);
         await this.searchBtn.click();
-        await this.page.getByRole('button', { name: /^Search$/ }).click();
         await this.page.waitForLoadState('networkidle');
     }
 
@@ -44,8 +48,12 @@ export class AdminUsersPage {
 
     async filterByRole(roleText) {
 
-        await this.page.getByText('User Role').locator('xpath=..').getByRole('textbox').click({ force: true }).catch(() => {});
-        await this.page.getByRole('option', { name: new RegExp(roleText, 'i') }).click();
+        if (await this.userRoleCombo.isVisible().catch(() => false)) {
+            await this.userRoleCombo.click();
+        } else {
+            await this.userRoleComboFallback.first().click();
+        }
+        await this.page.getByRole('option', { name: new RegExp(`^\\s*${roleText}\\s*$`, 'i') }).click();
     }
 
 }
