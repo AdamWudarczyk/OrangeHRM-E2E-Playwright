@@ -10,7 +10,7 @@ test('Positive: filter users by role ESS', async ({ page }) => {
     const nav   = new NavBar(page);
     const admin = new AdminUsersPage(page);
 
-    await login.open();
+    await login.goto();
     await login.login(creds.username, creds.password);
 
     await nav.openAdmin();
@@ -18,10 +18,10 @@ test('Positive: filter users by role ESS', async ({ page }) => {
     await admin.filterByRole('ESS');
     await admin.search();
 
-    await expect(admin.rows()).toHaveCountGreaterThan(0);
+    const rowCount = await admin.rows.count();
+    expect(rowCount).toBeGreaterThan(0);
 
-    const rowCount = await admin.rows().count();
     for (let i = 0; i < rowCount; i++) {
-        await expect(admin.rows().nth(i)).toContainText('ESS');
+        await expect(admin.rows.nth(i)).toContainText('ESS');
     }
 });
