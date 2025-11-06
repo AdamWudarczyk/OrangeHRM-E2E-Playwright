@@ -14,7 +14,7 @@ Covers smoke, functional (positive & negative), and end-to-end test scenarios fo
 
 ├─ fixtures\
 │  ├─ avatar.jpg\
-│  └─ credentials.json      \    # demo: { "username": "Admin", "password": "admin123" }\
+│  └─ credentials.json     # demo: { "username": "Admin", "password": "admin123" }\
 ├─ pages\
 │  └─ AdminUsersPage.js\
 │  └─ LoginPage.js\
@@ -35,7 +35,7 @@ Covers smoke, functional (positive & negative), and end-to-end test scenarios fo
 │\
 ├─ playwright.config.js\
 ├─ package.json\
-└─ README.md\
+└─ README.md
 
 ## Prerequisites
 - Node.js 18+
