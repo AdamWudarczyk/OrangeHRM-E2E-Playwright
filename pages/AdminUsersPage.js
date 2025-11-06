@@ -5,7 +5,7 @@ export class AdminUsersPage {
         this.heading = page.getByRole('heading', { name: /system users/i });
         this.usernameFilter = page.getByPlaceholder('Type for hints...').first();
         this.searchBtn = page.getByRole('button', { name: 'Search' });
-        this.rows = page.locator('div.oxd-table-body > div.oxd-table-card');
+        this._rows = page.locator('.oxd-table-body .oxd-table-card');
         this.tableRows = page.locator('div.oxd-table-body > div.oxd-table-card');
         this.userRoleCombo = page.getByRole('combobox', { name: /user role/i }).first();
         this.userRoleComboFallback = page
@@ -18,8 +18,8 @@ export class AdminUsersPage {
         await this.page.waitForURL(/admin\/viewSystemUsers/i, { timeout: 15000 });
     }
 
-    async rows() {
-        return this.tableRows;
+    get rows() {
+        return this._rows;
     }
 
     async search(username = '') {
@@ -37,14 +37,20 @@ export class AdminUsersPage {
 
         const passwords = this.page.locator('input[type="password"]');
         if (await passwords.count() < 2) {
-
-            const btn = this.page.getByRole('button', { name: /reset|change password/i });
-            if (await btn.isVisible()) await btn.click();
+            await this.page.getByRole('button', { name: /reset|change password/i }).first().click();
         }
-        await passwords.nth(0).fill(newPass);
-        await passwords.nth(1).fill(newPass);
+
+        await passwords.first().waitFor({ state: 'visible', timeout: 10000 });
+
+        const enabled = this.page.locator('input[type="password"]:not([disabled])');
+        await enabled.first().waitFor({ state: 'visible', timeout: 10000 });
+
+        await enabled.nth(0).fill(newPass);
+        await enabled.nth(1).fill(newPass);
         await this.page.getByRole('button', { name: /^Save$/ }).click();
     }
+
+
 
     async filterByRole(roleText) {
 
