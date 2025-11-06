@@ -8,8 +8,10 @@ test('Smoke: main menu visible after login + PIM navigation works', async ({ pag
     const login = new LoginPage(page);
     const nav   = new NavBar(page);
 
-    await login.open();
+    await login.goto();
     await login.login(creds.username, creds.password);
+
+    await nav.waitReady();
 
     await expect(nav.menuItem('Admin')).toBeVisible();
     await expect(nav.menuItem('PIM')).toBeVisible();
