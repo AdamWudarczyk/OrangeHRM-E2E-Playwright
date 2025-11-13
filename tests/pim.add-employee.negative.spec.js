@@ -10,13 +10,13 @@ test('Negative: Add Employee shows required field validation', async ({ page }) 
     const nav   = new NavBar(page);
     const pim   = new PIMPage(page);
 
-    await login.open();
+    await login.goto();
     await login.login(creds.username, creds.password);
 
     await nav.openPIM();
     await pim.openAdd();
 
     await pim.save();
-
     await expect(pim.errorFor('firstName')).toHaveText(/required/i);
+
 });
